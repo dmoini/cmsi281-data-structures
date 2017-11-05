@@ -213,23 +213,23 @@ public class Yarn implements YarnInterface {
     }
     
     private int getStrandIndex(String s) { // must check externally if Yarn contains Strand
-            int index = -1;
-            for (int i = 0; i < uniqueSize; i++) {
-                if (items[i].text.equals(s)) {
-                    index = i;
-                    break;
-                }
+        int index = -1;
+        for (int i = 0; i < uniqueSize; i++) {
+            if (items[i].text.equals(s)) {
+                index = i;
+                break;
             }
-            return index;
         }
+        return index;
     }
+}
     
-    class Strand {
-        String text;
-        int count;
-        
-        Strand (String s, int c) {
-            text = s;
-            count = c;
-        }
+class Strand {
+    String text;
+    int count;
+    
+    Strand (String s, int c) {
+        text = s;
+        count = c;
     }
+}
