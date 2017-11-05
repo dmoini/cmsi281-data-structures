@@ -232,17 +232,11 @@ public class LinkedYarn implements LinkedYarnInterface {
         }
         
         public boolean hasNext() {
-            if (!isValid()) {
-                return false;
-            }
-            return current.next != null || itWordCount < current.count;
+            return isValid() && (current.next != null || itWordCount < current.count);
         }
         
         public boolean hasPrev() {
-            if (!isValid()) {
-                return false;
-            }
-            return current.prev != null || itWordCount > 1;
+            return isValid() && (current.prev != null || itWordCount > 1);
         }
         
         public boolean isValid() {
@@ -257,11 +251,9 @@ public class LinkedYarn implements LinkedYarnInterface {
         }
 
         public void next() {
+            testValidity();
             if (!hasNext()) {
                 throw new NoSuchElementException();
-            }
-            if (!isValid()) {
-                throw new IllegalStateException();
             }
             if (itWordCount < current.count) {
                 itWordCount++;
@@ -272,11 +264,9 @@ public class LinkedYarn implements LinkedYarnInterface {
         }
         
         public void prev() {
+            testValidity();
             if (!hasPrev()) {
                 throw new NoSuchElementException();
-            }
-            if (!isValid()) {
-                throw new IllegalStateException();
             }
             if (itWordCount > 1) {
                 itWordCount--;
@@ -287,10 +277,11 @@ public class LinkedYarn implements LinkedYarnInterface {
         }
         
         public void replaceAll(String toReplaceWith) {
-            if (!isValid()) {
-                throw new IllegalStateException();
-            }
+            testValidity();
             Node found = owner.findNode(toReplaceWith);
+            if (current == found) {
+                return;
+            }
             current.text = toReplaceWith;
             if (found != null) {
                 current.count += found.count;
@@ -298,6 +289,12 @@ public class LinkedYarn implements LinkedYarnInterface {
             }
             modCount++;
             itModCount++;
+        }
+        
+        private void testValidity() {
+            if (!isValid()) {
+                throw new IllegalStateException();
+            }
         }
     }
         
@@ -313,33 +310,3 @@ public class LinkedYarn implements LinkedYarnInterface {
         }
     }
 }
-
-/*
-        In comparing Yarn and LinkedYarn with each other, each had some easier and harder components to program compared to the
-    other. In terms of Yarn, the hardest part was definitely getNth. The issue with getNth, other than not understanding its
-    use originally, was not knowing how to program and efficient method of returning the nth String. For LinkedYarn, the most
-    difficult methods were definitely the remove and removeAll methods. These methods were easier in Yarn due to random access,
-    since I could instantly pinpoint the location of which String I wanted to remove, but for LinkedYarn I had to go through
-    every single Node until I either found the one I was looking for or got to the end and did not find it. Adding on to the
-    difficulty, if remove left the String count at zero or I called removeAll, repairing the Node references to delete the
-    current Node was more difficult to understand and implement compared to replacing the current index of an array with the
-    last Strand in the array. One thing to note for LinkedYarn is that, for the most part besides having to understand Nodes,
-    it was a bit easier to start working on compared to Yarn because LinkedYarn is essentially the same thing as Yarn but
-    that it uses Nodes instead of an array. This meant that methods from Yarn essentially translated to LinkedYarn with much
-    ease in terms of concepts. 
-
-        A scenario in which I would prefer to use the sequential list implementation over the linked list implementation would
-    be for players on the field during a soccer match. Since soccer always has twenty-two players on the field, there could be
-    an array which holds the information of each player on the field, where the information consists of each player’s name,
-    team, number, position, goals, assists, and many other pieces of information. Even when a substitution is made, since
-    sequential lists support random access it could find the index of the player being substituted off and replace it with the
-    player being substituted on the field. If a player has received a red card, a boolean field can be updated to show that,
-    and when a player is trying to be substituted in there can be a check to make sure that the boolean field regarding a red
-    card is false. A scenario in which I would prefer to use the linked list implementation over the sequential list
-    implementation would be for keeping a record of all the players in a soccer club’s history. Since the list of all the
-    player in a club’s history is unlimited and always expanding, a linked list would be best for this situation. When a
-    player comes up through the youth academy or is bought by the club, a new node of that player would be created with all of
-    the information of the player such as name, position, club appearances, club goals, time at the club, yellow cards, and
-    many other aspects, and can simply be prepended to the linked list. If that player retires or transfers to another team,
-    then the time at club data would be updated to appropriately represent that. 
-*/
