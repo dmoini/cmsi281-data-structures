@@ -27,7 +27,7 @@ public class Autocompleter implements AutocompleterInterface {
     }
     
     public void addTerm (String toAdd) {
-        root = insert(toAdd);
+        root = insert(root, normalizeTerm(toAdd).toCharArray(), 0);
     }
     
     public boolean hasTerm (String query) {
@@ -74,10 +74,6 @@ public class Autocompleter implements AutocompleterInterface {
      */
     private int compareChars (char c1, char c2) {
         return Character.toLowerCase(c1) - Character.toLowerCase(c2);
-    }
-    
-    private TTNode insert(String toAdd) {
-        return insert(root, normalizeTerm(toAdd).toCharArray(), 0);
     }
     
     private TTNode insert(TTNode current, char[] word, int index) {
