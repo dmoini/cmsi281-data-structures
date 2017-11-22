@@ -21,7 +21,7 @@ public class Autocompleter implements AutocompleterInterface {
     // -----------------------------------------------------------
     // Methods
     // -----------------------------------------------------------
-    
+
     public boolean isEmpty () {
         return root == null;
     }
@@ -152,6 +152,19 @@ public class Autocompleter implements AutocompleterInterface {
             left = null;
             mid = null;
             right = null;
+        }
+    }
+    
+    public static void main(String[] args) {
+        Autocompleter ac = new Autocompleter();
+        ac.addTerm("hello");
+        ac.addTerm("bye");
+        ac.addTerm("2");
+        ac.addTerm("1");
+        ac.addTerm("12");
+        ArrayList<String> sorted = ac.getSortedTerms();
+        for (int i = 0; i < sorted.size(); i++) {
+            System.out.print(sorted.get(i) + " ");
         }
     }
 }
