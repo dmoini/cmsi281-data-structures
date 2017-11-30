@@ -27,7 +27,7 @@ public class Autocompleter implements AutocompleterInterface {
     }
     
     public void addTerm (String toAdd) {
-        root = insert(root, normalizeTerm(toAdd).toCharArray(), 0);
+        root = insert(root, normalizeTerm(toAdd), 0);
     }
     
     public boolean hasTerm (String query) {
@@ -76,17 +76,17 @@ public class Autocompleter implements AutocompleterInterface {
         return Character.toLowerCase(c1) - Character.toLowerCase(c2);
     }
     
-    private TTNode insert(TTNode current, char[] word, int index) {
+    private TTNode insert(TTNode current, String word, int index) {
         if (current == null) {
-            current = new TTNode(word[index], false);
+            current = new TTNode(word.charAt(index), false);
         }
-        int compare = compareChars(word[index], current.letter);
+        int compare = compareChars(word.charAt(index), current.letter);
         if (compare < 0) {
             current.left = insert(current.left, word, index);
         } else if (compare > 0) {
             current.right = insert(current.right, word, index);
         } else {
-            if (index + 1 < word.length) {
+            if (index + 1 < word.length()) {
                 current.mid = insert(current.mid, word, index + 1);
             } else {
                 current.wordEnd = true;
@@ -96,20 +96,20 @@ public class Autocompleter implements AutocompleterInterface {
     }
     
     private TTNode find(String query) {
-        return find(root, normalizeTerm(query).toCharArray(), 0);
+        return find(root, normalizeTerm(query), 0);
     }
 
-    private TTNode find(TTNode current, char[] word, int index) {
+    private TTNode find(TTNode current, String word, int index) {
         if (current == null) {
             return null;
         }
-        int compare = compareChars(word[index], current.letter);
+        int compare = compareChars(word.charAt(index), current.letter);
         if (compare < 0) {
             return find(current.left, word, index);
         } else if (compare > 0) {
             return find(current.right, word, index);
         } else {
-            if (index == word.length - 1) {
+            if (index == word.length() - 1) {
                 return current;
             }
             return find(current.mid, word, index + 1);
