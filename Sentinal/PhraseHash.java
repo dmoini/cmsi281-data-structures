@@ -40,7 +40,7 @@ public class PhraseHash implements PhraseHashInterface {
         return size == 0;
     }
     
-    public void put(String s) { //TODO ask if case of empty string passed through
+    public void put(String s) {
         int index = hash(s);
         if (buckets[index].contains(s)) {
             return;
