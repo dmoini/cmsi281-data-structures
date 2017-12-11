@@ -59,11 +59,9 @@ public class Sentinal implements SentinalInterface {
                 for (int i = 0; i < sentence.length + 1 - phraseLength; i++) {
                     String phrase = "";
                     for (int j = i; j < i + phraseLength; j++) {
-                        phrase += sentence[j];
-                        if (j < i + phraseLength - 1) {
-                            phrase += " ";
-                        }
+                        phrase += sentence[j] + " ";
                     }
+                    phrase = phrase.trim();
                     if (posHash.get(phrase) != null) {
                         count++;
                     }
@@ -94,4 +92,3 @@ public class Sentinal implements SentinalInterface {
         }
     }
  }
-
