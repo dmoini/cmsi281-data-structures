@@ -2,7 +2,6 @@ package sentinal;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Sentinal implements SentinalInterface {
@@ -62,15 +61,9 @@ public class Sentinal implements SentinalInterface {
                         phrase += sentence[j] + " ";
                     }
                     phrase = phrase.trim();
-                    if (posHash.get(phrase) != null) {
-                        count++;
-                    }
-                    if (negHash.get(phrase) != null) {
-                        count--;
-                    }
+                    count = updateCount(phrase, count);
                 }
                 phraseLength++;
-                
             }
         }
         sc.close();
@@ -90,5 +83,15 @@ public class Sentinal implements SentinalInterface {
         } else {
             return "neutral";
         }
+    }
+    
+    private int updateCount(String phrase, int count) {
+        if (posHash.get(phrase) != null) {
+            count++;
+        }
+        if (negHash.get(phrase) != null) {
+            count--;
+        }
+        return count;
     }
  }
