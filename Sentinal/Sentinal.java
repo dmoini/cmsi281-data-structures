@@ -30,19 +30,14 @@ public class Sentinal implements SentinalInterface {
     // -----------------------------------------------------------
     
     public void loadSentiment(String phrase, boolean positive) {
-        if (positive) {
-            posHash.put(phrase);
-        } else {
-            negHash.put(phrase);
-        }
+        ((positive) ? posHash : negHash).put(phrase);
     }
     
     public void loadSentimentFile(String filename, boolean positive) throws FileNotFoundException {
         File file = new File(filename);
         Scanner sc = new Scanner(file);
         while(sc.hasNext()) {
-            String phrase = sc.nextLine();
-            loadSentiment(phrase, positive);
+            loadSentiment(sc.nextLine(), positive);
         }
         sc.close();
     }
