@@ -175,24 +175,24 @@ public class Yarn implements YarnInterface {
     public static Yarn tear(Yarn y1, Yarn y2) {
         Yarn y3 = new Yarn();
         for (int i = 0; i < y1.uniqueSize; i++) {
-    			String text = y1.items[i].text;
-    			int count = y1.items[i].count;
-    			if (!y2.contains(text)) {
-    			    for (int j = 0; j < count; j++) {
-    			        y3.insert(text);
-    			    }
-    			} else {
-    			    for (int j = 0; j < y2.uniqueSize; j++) {
-    			        String text2 = y2.items[j].text;
-    			        int count2 = y2.items[j].count;
-    			        if (text.equals(text2) && (count > count2)) {
-    			            for (int k = 0; k < (count - count2); k++) {
-    			                y3.insert(text);
-    			            }
-    			            break;
-    			        }
-    			    }
-    			}
+            String text = y1.items[i].text;
+            int count = y1.items[i].count;
+            if (!y2.contains(text)) {
+                for (int j = 0; j < count; j++) {
+                    y3.insert(text);
+                }
+            } else {
+                for (int j = 0; j < y2.uniqueSize; j++) {
+                    String text2 = y2.items[j].text;
+                    int count2 = y2.items[j].count;
+                    if (text.equals(text2) && (count > count2)) {
+                        for (int k = 0; k < (count - count2); k++) {
+                            y3.insert(text);
+                        }
+                        break;
+                    }
+                }
+            }
         }
         return y3;
     }
